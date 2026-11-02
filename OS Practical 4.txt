@@ -1,0 +1,145 @@
+﻿Create a project directory named AIML_Project and:
+    1. Create files for students, faculty and administrators.
+    2. Assign different permissions to the files.
+    3. Display file ownership and permission details.
+    4. Change permissions using symbolic and numeric notation.
+    5. Demonstrate the effect of read, write and execute permissions.
+Task 1: Create the project directory and files
+# ==========================================
+# PRACTICAL 4 - TASK 1
+# Create AIML_Project directory and files
+# for students, faculty and administrators
+# ==========================================
+
+# Go to your OS_lab directory
+cd ~/OS_lab
+
+# Create AIML_Project directory
+mkdir AIML_Project
+
+# Enter the project directory
+cd AIML_Project
+
+# Create files
+touch students.txt
+touch faculty.txt
+touch administrators.txt
+
+# Display created files
+ls -l
+Task 2: Assign different permissions to the files.
+# ==========================================
+# PRACTICAL 4 - TASK 2
+# Assign different permissions to files
+# ==========================================
+
+# Students file: Read and write for owner,
+# read-only for group and others
+chmod 644 students.txt
+
+# Faculty file: Read, write and execute for owner,
+# read and execute for group and others
+chmod 755 faculty.txt
+
+# Administrators file: Full permissions for owner,
+# no permissions for group and others
+chmod 700 administrators.txt
+
+# Display permission details
+ls -l
+Task 3: Display file ownership and permission details.
+# ==========================================
+# PRACTICAL 4 - TASK 3
+# Display file ownership and permission details
+# ==========================================
+
+# Display ownership and permissions of all files
+ls -l
+
+# Display detailed information for students file
+stat students.txt
+
+# Display detailed information for faculty file
+stat faculty.txt
+
+# Display detailed information for administrators file
+stat administrators.txt
+Task 4: Change permissions using symbolic and numeric notation.
+# ==========================================
+# PRACTICAL 4 - TASK 4
+# Change permissions using symbolic
+# and numeric notation
+# ==========================================
+
+# ---------- SYMBOLIC NOTATION ----------
+
+# Add execute permission to owner
+chmod u+x students.txt
+
+# Remove execute permission from group and others
+chmod go-x faculty.txt
+
+# Add read permission to others
+chmod o+r administrators.txt
+
+# Display permissions after symbolic changes
+ls -l
+
+
+# ---------- NUMERIC NOTATION ----------
+
+# Students: Owner = rw-, Group = r--, Others = r--
+chmod 644 students.txt
+
+# Faculty: Owner = rwx, Group = r-x, Others = r-x
+chmod 755 faculty.txt
+
+# Administrators: Owner = rwx, Group = ---, Others = ---
+chmod 700 administrators.txt
+
+# Display final permissions
+ls -l
+Task 5: Demonstrate the effect of Read, Write and Execute permissions.
+# ==========================================
+# PRACTICAL 4 - TASK 5
+# Demonstrate Read, Write and Execute
+# permissions
+# ==========================================
+
+# Create a test file
+echo "This is a test file for permissions" > permission_test.txt
+
+# ---------- READ PERMISSION ----------
+
+# Give read-only permission
+chmod 400 permission_test.txt
+
+# Try to read the file
+cat permission_test.txt
+
+# ---------- WRITE PERMISSION ----------
+
+# Give read and write permission to owner
+chmod 600 permission_test.txt
+
+# Add new content to the file
+echo "Write permission is working" >> permission_test.txt
+
+# Display updated content
+cat permission_test.txt
+
+# ---------- EXECUTE PERMISSION ----------
+
+# Create a simple shell script
+echo '#!/bin/bash' > test_script.sh
+echo 'echo "Execute permission is working"' >> test_script.sh
+
+# Give execute permission
+chmod 700 test_script.sh
+
+# Run the script
+./test_script.sh
+
+# Display final permissions
+ls -l permission_test.txt test_script.sh
+

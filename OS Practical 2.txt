@@ -1,0 +1,200 @@
+﻿Task 1: Create files with different permissions and display their permission details.
+# ==========================================
+# PRACTICAL 2 - TASK 1
+# Create files with different permissions
+# and display their permission details
+# ==========================================
+
+# Create three files
+touch read_only.txt
+touch read_write.txt
+touch executable.txt
+
+# Assign different permissions
+
+# Read-only permission
+chmod 444 read_only.txt
+
+# Read and write permission for owner,
+# read permission for group and others
+chmod 644 read_write.txt
+
+# Read, write and execute for owner,
+# read and execute for group and others
+chmod 755 executable.txt
+
+# Display permission details
+ls -l
+
+# Display detailed information of each file
+stat read_only.txt
+stat read_write.txt
+stat executable.txt
+Task 2 Modify read, write and execute permissions using symbolic and numeric modes.
+# ==========================================
+# PRACTICAL 2 - TASK 2
+# Modify permissions using symbolic
+# and numeric modes
+# ==========================================
+
+# ---------- SYMBOLIC MODE ----------
+
+# Add write permission to the owner
+chmod u+w read_only.txt
+
+# Remove read permission from group
+chmod g-r read_write.txt
+
+# Add execute permission to the owner
+chmod u+x executable.txt
+
+# Add read permission to others
+chmod o+r executable.txt
+
+# Display permissions after symbolic changes
+ls -l
+
+
+# ---------- NUMERIC MODE ----------
+
+# Owner = rw-, Group = r--, Others = ---
+chmod 640 read_write.txt
+
+# Owner = rwx, Group = ---, Others = ---
+chmod 700 executable.txt
+
+# Owner = r--, Group = r--, Others = r--
+chmod 444 read_only.txt
+
+# Display permissions after numeric changes
+ls -l
+
+
+# Display detailed information
+stat read_only.txt
+stat read_write.txt
+stat executable.txt
+Permission symbols:
+u = User/Owner
+g = Group
+o = Others
+
+r = Read
+w = Write
+x = Execute
+
+chmod u+w file.txt   → Add write permission to owner
+chmod g-r file.txt   → Remove read permission from group
+chmod o+r file.txt   → Add read permission to others
+Numeric permissions:
+4 = Read
+2 = Write
+1 = Execute
+
+7 = rwx (4+2+1)
+6 = rw- (4+2)
+5 = r-x (4+1)
+4 = r--
+Task3: Identify the current user and group, and demonstrate ownership changes.
+# ==========================================
+# PRACTICAL 2 - TASK 3
+# Identify current user and group
+# and demonstrate ownership changes
+# ==========================================
+
+# Display current username
+whoami
+
+# Display user ID, group ID and group information
+id
+
+# Display groups of the current user
+groups
+
+# Create a test file
+touch ownership.txt
+
+# Display current file ownership and permissions
+ls -l ownership.txt
+
+# Display detailed file information
+stat ownership.txt
+
+# Create a new user named student
+# (Requires administrator privileges)
+sudo useradd -m student
+
+# Verify that the student user exists
+id student
+
+# Change ownership of the file to student
+sudo chown student ownership.txt
+
+# Check changed ownership
+ls -l ownership.txt
+
+# Change ownership back to the current user and primary group
+sudo chown $USER:$(id -gn) ownership.txt
+
+# Verify ownership after changing it back
+ls -l ownership.txt
+
+# Display final detailed information
+stat ownership.txt
+Task4 : Display running processes and identify their Process IDs (PIDs).
+# ==========================================
+# PRACTICAL 2 - TASK 4
+# Display running processes and identify
+# their Process IDs (PIDs)
+# ==========================================
+
+# Display processes running in the current terminal
+ps
+
+# Display detailed process information
+ps -f
+
+# Display all running processes
+ps -e
+
+# Display all processes with detailed information
+ps -ef
+
+# Display processes in BSD format
+ps aux
+
+# Display PID and command name
+ps -eo pid,comm
+
+# Display PID, Parent PID and command
+ps -eo pid,ppid,comm
+
+# Display the Process ID (PID) of the current shell
+echo $$
+
+# Search for bash processes
+ps -ef | grep bash
+
+# Monitor processes interactively
+top
+
+# Press 'q' to exit top
+Task 5: Monitor CPU and memory usage and display disk-space information.
+# ==========================================
+# PRACTICAL 2 - TASK 5
+# Monitor CPU and memory usage and
+# display disk-space information
+# ==========================================
+
+# Monitor CPU and running processes
+top
+
+# Display memory (RAM) usage
+free -h
+
+# Display disk-space information
+df -h
+
+# Display disk usage of the current directory
+du -sh .
+

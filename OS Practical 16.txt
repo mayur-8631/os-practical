@@ -1,0 +1,211 @@
+Implement Banker’s Algorithm and deadlock detection techniques. Analyze
+resource allocation patterns and evaluate system performance under
+different deadlock scenarios.
+
+Practical 16 — Banker’s Algorithm and Deadlock Detection in simple
+Python.
+
+Task 1: Banker’s Algorithm
+
+    n = int(input("Enter number of processes: "))
+    m = int(input("Enter number of resource types: "))
+
+    allocation = []
+    maximum = []
+
+    print("Enter Allocation Matrix:")
+
+    for i in range(n):
+        row = list(map(int, input().split()))
+        allocation.append(row)
+
+    print("Enter Maximum Matrix:")
+
+    for i in range(n):
+        row = list(map(int, input().split()))
+        maximum.append(row)
+
+    available = list(map(int, input("Enter Available Resources: ").split()))
+
+    need = []
+
+    for i in range(n):
+        row = []
+
+        for j in range(m):
+            row.append(maximum[i][j] - allocation[i][j])
+
+        need.append(row)
+
+    finish = [False] * n
+    safe_sequence = []
+
+    while len(safe_sequence) < n:
+
+        found = False
+
+        for i in range(n):
+
+            if not finish[i]:
+
+                possible = True
+
+                for j in range(m):
+
+                    if need[i][j] > available[j]:
+                        possible = False
+                        break
+
+                if possible:
+
+                    for j in range(m):
+                        available[j] += allocation[i][j]
+
+                    finish[i] = True
+                    safe_sequence.append(i)
+                    found = True
+
+        if not found:
+            break
+
+    if len(safe_sequence) == n:
+        print("System is in SAFE state")
+        print("Safe Sequence:", end=" ")
+
+        for i in safe_sequence:
+            print(f"P{i}", end=" ")
+
+        print()
+
+    else:
+        print("System is NOT in a safe state")
+
+Save and run:
+
+    nano bankers.py
+    python3 bankers.py
+
+Example input
+
+    Enter number of processes: 5
+    Enter number of resource types: 3
+
+    Enter Allocation Matrix:
+    0 1 0
+    2 0 0
+    3 0 2
+    2 1 1
+    0 0 2
+
+    Enter Maximum Matrix:
+    7 5 3
+    3 2 2
+    9 0 2
+    2 2 2
+    4 3 3
+
+    Enter Available Resources: 3 3 2
+
+------------------------------------------------------------------------
+
+Task 2: Deadlock Detection
+
+    n = int(input("Enter number of processes: "))
+    m = int(input("Enter number of resource types: "))
+
+    allocation = []
+
+    print("Enter Allocation Matrix:")
+
+    for i in range(n):
+        row = list(map(int, input().split()))
+        allocation.append(row)
+
+    request = []
+
+    print("Enter Request Matrix:")
+
+    for i in range(n):
+        row = list(map(int, input().split()))
+        request.append(row)
+
+    available = list(map(int, input("Enter Available Resources: ").split()))
+
+    finish = [False] * n
+
+    while True:
+
+        found = False
+
+        for i in range(n):
+
+            if not finish[i]:
+
+                possible = True
+
+                for j in range(m):
+
+                    if request[i][j] > available[j]:
+                        possible = False
+                        break
+
+                if possible:
+
+                    for j in range(m):
+                        available[j] += allocation[i][j]
+
+                    finish[i] = True
+                    found = True
+
+        if not found:
+            break
+
+    deadlocked = []
+
+    for i in range(n):
+
+        if not finish[i]:
+            deadlocked.append(i)
+
+    if len(deadlocked) == 0:
+        print("No Deadlock Detected")
+    else:
+        print("Deadlock Detected")
+
+        print("Deadlocked Processes:", end=" ")
+
+        for i in deadlocked:
+            print(f"P{i}", end=" ")
+
+        print()
+
+Save and run:
+
+    nano deadlock_detection.py
+    python3 deadlock_detection.py
+
+Final Practical 17
+
+    Task 1 → Banker's Algorithm
+    Task 2 → Deadlock Detection
+
+Note: Enter each matrix row as space-separated values, for example:
+
+    0 1 0
+
+Use this correct input flow for deadlock.py:
+
+    Enter number of processes: 3
+    Enter number of resource types: 2
+
+    Enter Allocation Matrix:
+    1 0
+    0 1
+    1 1
+
+    Enter Request Matrix:
+    0 1
+    1 0
+    1 1
+
+    Enter Available Resources: 0 0

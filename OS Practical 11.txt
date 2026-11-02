@@ -1,0 +1,53 @@
+Implement Inter-Process Communication using pipes and message queues.
+Analyze communication efficiency, resource sharing, and memory
+utilization
+
+Practical 11 — Task 1: IPC Using Pipe
+
+    from multiprocessing import Process, Pipe
+
+    def child_process(connection):
+        message = connection.recv()
+        print("Child received:", message)
+        connection.close()
+
+    if __name__ == "__main__":
+        parent_conn, child_conn = Pipe()
+
+        p = Process(target=child_process, args=(child_conn,))
+        p.start()
+
+        parent_conn.send("Hello from Parent Process")
+        print("Parent sent: Hello from Parent Process")
+
+        p.join()
+        parent_conn.close()
+
+Run:
+
+    python3 pipe_p11.py
+
+------------------------------------------------------------------------
+
+Practical 11 — Task 2: IPC Using Message Queue
+
+    from multiprocessing import Process, Queue
+
+    def child_process(queue):
+        message = queue.get()
+        print("Child received:", message)
+
+    if __name__ == "__main__":
+        queue = Queue()
+
+        p = Process(target=child_process, args=(queue,))
+        p.start()
+
+        queue.put("Hello from Parent Process")
+        print("Parent sent: Hello from Parent Process")
+
+        p.join()
+
+Run:
+
+    python3 message_queue_p11.py

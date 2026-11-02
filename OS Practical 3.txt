@@ -1,0 +1,111 @@
+﻿    1. Create a directory named Student_Records. Perform the following operations:
+    2. i. Create separate directories for FY, SY, TE and BE students.
+    3. ii. Create text files containing student names and roll numbers.
+    4. iii. Copy selected files into another directory.
+    5. iv. Rename and delete specified files.
+    6. v. Display the complete directory structure.
+Task 1: Create Student_Records and FY, SY, TE, BE directories
+# ==========================================
+# PRACTICAL 3 - TASK 1
+# Create Student_Records directory and
+# separate directories for FY, SY, TE and BE
+# ==========================================
+
+# Create main directory
+mkdir Student_Records
+
+# Enter the main directory
+cd Student_Records
+
+# Create student year directories
+mkdir FY SY TE BE
+
+# Display created directories
+ls -l
+Task 2: Create text files containing student names and roll numbers.
+# ==========================================
+# PRACTICAL 3 - TASK 2
+# Create text files containing student names
+# and roll numbers
+# ==========================================
+
+# Create and add student details for FY
+echo "Name: Amit Patil | Roll No: FY001" > FY/fy_students.txt
+
+# Create and add student details for SY
+echo "Name: Rahul Sharma | Roll No: SY001" > SY/sy_students.txt
+
+# Create and add student details for TE
+echo "Name: Priya Joshi | Roll No: TE001" > TE/te_students.txt
+
+# Create and add student details for BE
+echo "Name: Sneha Kulkarni | Roll No: BE001" > BE/be_students.txt
+
+# Display all student files
+cat FY/fy_students.txt
+cat SY/sy_students.txt
+cat TE/te_students.txt
+cat BE/be_students.txt
+
+# Verify created files
+find . -type f
+Task 3 : Copy selected files into another directory.
+# ==========================================
+# PRACTICAL 3 - TASK 3
+# Copy selected student files into
+# another directory
+# ==========================================
+
+# Create a directory for selected/copied files
+mkdir Selected
+
+# Copy FY student file into Selected
+cp FY/fy_students.txt Selected/
+
+# Copy TE student file into Selected
+cp TE/te_students.txt Selected/
+
+# Display copied files
+ls -l Selected
+
+# Display contents of copied files
+cat Selected/fy_students.txt
+cat Selected/te_students.txt
+Task 4: Rename and delete specified files.
+# ==========================================
+# PRACTICAL 3 - TASK 4
+# Rename and delete specified files
+# ==========================================
+
+# Rename SY student file
+mv SY/sy_students.txt SY/second_year.txt
+
+# Verify renamed file
+ls -l SY
+
+# Delete BE student file
+rm BE/be_students.txt
+
+# Verify deletion
+ls -l BE
+
+# Display all remaining student files
+find . -type f
+Task 5: Display the complete directory structure.
+# ==========================================
+# PRACTICAL 3 - TASK 5
+# Display the complete directory structure
+# ==========================================
+
+# Display complete directory structure
+tree
+
+# If tree is not installed, install it
+sudo apt install tree -y
+
+# Then display the structure again
+tree
+
+# Alternative command to display directories and files
+find .
+

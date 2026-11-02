@@ -1,0 +1,117 @@
+﻿Develop programs to create and manage processes using system calls. Implement CPU scheduling algorithms (FCFS, SJF) and analyze their impact on process execution, memory utilization, and overall system performance.
+Process Creation and Management
+# ==========================================
+# PROCESS CREATION AND MANAGEMENT
+# ==========================================
+
+import os
+
+print("Parent Process ID:", os.getpid())
+
+pid = os.fork()
+
+if pid == 0:
+    # Child process
+    print("Child Process")
+    print("Child PID:", os.getpid())
+    print("Parent PID:", os.getppid())
+
+else:
+    # Parent process
+    os.wait()
+    print("Child process completed")
+    
+python3 process_management.py
+2. FCFS Scheduling Algorithm
+# ==========================================
+# FCFS SCHEDULING ALGORITHM
+# ==========================================
+
+n = int(input("Enter number of processes: "))
+
+burst_time = []
+
+for i in range(n):
+    bt = int(input(f"Enter Burst Time for P{i + 1}: "))
+    burst_time.append(bt)
+
+waiting_time = [0] * n
+turnaround_time = [0] * n
+
+# Calculate Waiting Time
+for i in range(1, n):
+    waiting_time[i] = waiting_time[i - 1] + burst_time[i - 1]
+
+# Calculate Turnaround Time
+for i in range(n):
+    turnaround_time[i] = waiting_time[i] + burst_time[i]
+
+# Display Results
+print("\nProcess\tBT\tWT\tTAT")
+
+for i in range(n):
+    print(f"P{i + 1}\t{burst_time[i]}\t{waiting_time[i]}\t{turnaround_time[i]}")
+
+# Calculate averages
+avg_wt = sum(waiting_time) / n
+avg_tat = sum(turnaround_time) / n
+
+print("\nAverage Waiting Time =", avg_wt)
+print("Average Turnaround Time =", avg_tat)
+
+
+python3 fcfs.py
+3. SJF Scheduling Algorithm
+# ==========================================
+# SJF SCHEDULING ALGORITHM
+# ==========================================
+
+n = int(input("Enter number of processes: "))
+
+processes = []
+
+# Input Process and Burst Time
+for i in range(n):
+    bt = int(input(f"Enter Burst Time for P{i + 1}: "))
+    processes.append([i + 1, bt])
+
+# Sort according to Burst Time
+processes.sort(key=lambda x: x[1])
+
+waiting_time = []
+turnaround_time = []
+
+# Calculate Waiting Time
+for i in range(n):
+    if i == 0:
+        waiting_time.append(0)
+    else:
+        waiting_time.append(
+            waiting_time[i - 1] + processes[i - 1][1]
+        )
+
+# Calculate Turnaround Time
+for i in range(n):
+    tat = waiting_time[i] + processes[i][1]
+    turnaround_time.append(tat)
+
+# Display Results
+print("\nProcess\tBT\tWT\tTAT")
+
+for i in range(n):
+    print(
+        f"P{processes[i][0]}\t"
+        f"{processes[i][1]}\t"
+        f"{waiting_time[i]}\t"
+        f"{turnaround_time[i]}"
+    )
+
+# Calculate averages
+avg_wt = sum(waiting_time) / n
+avg_tat = sum(turnaround_time) / n
+
+print("\nAverage Waiting Time =", avg_wt)
+print("Average Turnaround Time =", avg_tat)
+
+python3 sjf.py
+

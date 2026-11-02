@@ -1,0 +1,134 @@
+Create a multithreaded application using POSIX threads to execute
+concurrent tasks. Measure CPU utilization, memory consumption, and
+execution time under different thread
+
+Practical 13 — Multithreading in Python
+
+Since you want simple Python code, we can use Python’s threading module
+instead of POSIX threads directly.
+
+Task 1: Create Multiple Threads
+
+    import threading
+    import time
+
+    def task(name):
+        for i in range(5):
+            print(name, "is running")
+            time.sleep(1)
+
+    thread1 = threading.Thread(target=task, args=("Thread 1",))
+    thread2 = threading.Thread(target=task, args=("Thread 2",))
+
+    thread1.start()
+    thread2.start()
+
+    thread1.join()
+    thread2.join()
+
+    print("All threads completed")
+
+Run:
+
+    python3 multithreading.py
+
+------------------------------------------------------------------------
+
+Task 2: Measure Execution Time
+
+This compares concurrent threads running tasks.
+
+    import threading
+    import time
+
+    def task():
+        time.sleep(2)
+
+    start_time = time.time()
+
+    thread1 = threading.Thread(target=task)
+    thread2 = threading.Thread(target=task)
+    thread3 = threading.Thread(target=task)
+
+    thread1.start()
+    thread2.start()
+    thread3.start()
+
+    thread1.join()
+    thread2.join()
+    thread3.join()
+
+    end_time = time.time()
+
+    print("Execution Time:", end_time - start_time, "seconds")
+
+Run:
+
+    python3 execution_time.py
+
+Expected execution time will be approximately:
+
+    Execution Time: 2.0 seconds
+
+because the threads execute concurrently.
+
+------------------------------------------------------------------------
+
+Task 3: Measure CPU and Memory Usage
+
+For a simple OS practical, install psutil first:
+
+    pip install psutil
+
+Then:
+
+    import threading
+    import time
+    import os
+    import psutil
+
+    def task():
+        total = 0
+
+        for i in range(10000000):
+            total += i
+
+    thread1 = threading.Thread(target=task)
+    thread2 = threading.Thread(target=task)
+
+    process = psutil.Process(os.getpid())
+
+    start_time = time.time()
+
+    thread1.start()
+    thread2.start()
+
+    thread1.join()
+    thread2.join()
+
+    end_time = time.time()
+
+    cpu_usage = process.cpu_percent(interval=0.1)
+    memory_usage = process.memory_info().rss / (1024 * 1024)
+
+    print("CPU Usage:", cpu_usage, "%")
+    print("Memory Usage:", memory_usage, "MB")
+    print("Execution Time:", end_time - start_time, "seconds")
+
+Install psutil if needed:
+
+    pip install psutil
+
+Run:
+
+    python3 performance.py
+
+Final Practical 13
+
+    Task 1 → Create concurrent threads
+    Task 2 → Measure execution time
+    Task 3 → Measure CPU and memory usage
+
+Note: Your practical says POSIX threads, which are normally implemented
+using pthread in C. For your requested Python version, threading.Thread
+is the closest simple equivalent for demonstrating multithreading.

@@ -1,0 +1,126 @@
+Implement file allocation and disk scheduling algorithms (FCFS, SCAN).
+Analyze storage utilization, access time, and system throughput.
+
+Practical 21 — File Allocation and Disk Scheduling (FCFS, SCAN)
+
+Here are the simple Python codes.
+
+Task 1: File Allocation (Contiguous Allocation)
+
+    n = int(input("Enter number of files: "))
+
+    for i in range(n):
+        name = input("Enter file name: ")
+        start = int(input("Enter starting block: "))
+        length = int(input("Enter number of blocks: "))
+
+        print("\nFile:", name)
+        print("Allocated Blocks:", end=" ")
+
+        for j in range(length):
+            print(start + j, end=" ")
+
+        print()
+
+Run:
+
+    python3 file_allocation.py
+
+------------------------------------------------------------------------
+
+Task 2: FCFS Disk Scheduling
+
+    n = int(input("Enter number of disk requests: "))
+
+    requests = list(map(int, input("Enter disk requests: ").split()))
+
+    head = int(input("Enter initial head position: "))
+
+    total_movement = 0
+    current = head
+
+    print("\nHead Movement:")
+
+    for request in requests:
+        print(current, "->", request)
+
+        total_movement += abs(request - current)
+        current = request
+
+    print("\nTotal Head Movement:", total_movement)
+    print("Average Seek Time:", total_movement / n)
+
+Run:
+
+    python3 fcfs_disk.py
+
+------------------------------------------------------------------------
+
+Task 3: SCAN Disk Scheduling
+
+This simple program assumes the disk head initially moves toward
+higher-numbered tracks.
+
+    n = int(input("Enter number of disk requests: "))
+
+    requests = list(map(int, input("Enter disk requests: ").split()))
+
+    head = int(input("Enter initial head position: "))
+
+    disk_size = int(input("Enter disk size: "))
+
+    left = []
+    right = []
+
+    for request in requests:
+        if request < head:
+            left.append(request)
+        else:
+            right.append(request)
+
+    left.sort(reverse=True)
+    right.sort()
+
+    sequence = []
+
+    sequence.extend(right)
+
+    sequence.append(disk_size - 1)
+
+    sequence.extend(left)
+
+    current = head
+    total_movement = 0
+
+    print("\nSCAN Disk Scheduling Sequence:")
+
+    for request in sequence:
+
+        print(current, "->", request)
+
+        total_movement += abs(request - current)
+        current = request
+
+    print("\nTotal Head Movement:", total_movement)
+    print("Average Seek Time:", total_movement / n)
+
+Run:
+
+    python3 scan.py
+
+Example input
+
+    Enter number of disk requests: 8
+    Enter disk requests: 98 183 37 122 14 124 65 67
+    Enter initial head position: 53
+    Enter disk size: 200
+
+Final Practical 21 Files
+
+    file_allocation.py  → File Allocation
+    fcfs_disk.py        → FCFS Disk Scheduling
+    scan.py              → SCAN Disk Scheduling
+
+Comparison: Use Total Head Movement and Average Seek Time as performance
+metrics. SCAN generally provides more organized disk servicing than
+FCFS, especially when many requests are distributed across the disk.

@@ -1,0 +1,65 @@
+Implement Inter-Process Communication using shared memory and message
+queues. Analyze communication efficiency, resource sharing, and memory
+utilization.
+
+------------------------------------------------------------------------
+
+Practical 12 — Task 1: IPC Using Shared Memory
+
+    from multiprocessing import Process, Value
+
+    def child_process(shared_value):
+        shared_value.value = 100
+        print("Child wrote:", shared_value.value)
+
+    if __name__ == "__main__":
+        shared_value = Value('i', 0)
+
+        p = Process(target=child_process, args=(shared_value,))
+        p.start()
+
+        p.join()
+
+        print("Parent read:", shared_value.value)
+
+Run:
+
+    python3 shared_memory_p12.py
+
+Expected output:
+
+    Child wrote: 100
+    Parent read: 100
+
+------------------------------------------------------------------------
+
+Practical 12 — Task 2: IPC Using Message Queue
+
+    from multiprocessing import Process, Queue
+
+    def child_process(queue):
+        message = queue.get()
+        print("Child received:", message)
+
+    if __name__ == "__main__":
+        queue = Queue()
+
+        p = Process(target=child_process, args=(queue,))
+        p.start()
+
+        queue.put("Hello from Parent Process")
+        print("Parent sent: Hello from Parent Process")
+
+        p.join()
+
+Run:
+
+    python3 message_queue_p12.py
+
+Expected output:
+
+    Parent sent: Hello from Parent Process
+    Child received: Hello from Parent Process
+
+These should fix the same multiprocessing bootstrapping/forkserver error
+you got in Practical 11.

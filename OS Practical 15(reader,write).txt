@@ -1,0 +1,87 @@
+Develop programs using semaphores and mutex locks to solve
+synchronization problems such as Readers–Writers. Evaluate the effect of
+synchronization on resource allocation and system performance.
+
+This program uses:
+
+-   Mutex (threading.Lock) → protects the shared read_count
+-   Semaphore (threading.Semaphore) → controls access to the shared data
+-   Multiple Reader and Writer threads
+
+    import threading
+    import time
+
+    read_count = 0
+    shared_data = 100
+
+    mutex = threading.Lock()
+    write_lock = threading.Semaphore(1)
+
+
+    def reader(reader_id):
+        global read_count
+
+        mutex.acquire()
+        read_count += 1
+
+        if read_count == 1:
+            write_lock.acquire()
+
+        mutex.release()
+
+        print(f"Reader {reader_id} is reading: {shared_data}")
+        time.sleep(1)
+
+        mutex.acquire()
+        read_count -= 1
+
+        if read_count == 0:
+            write_lock.release()
+
+        mutex.release()
+
+
+    def writer(writer_id):
+        global shared_data
+
+        write_lock.acquire()
+
+        shared_data += 10
+
+        print(f"Writer {writer_id} updated data to: {shared_data}")
+        time.sleep(1)
+
+        write_lock.release()
+
+
+    reader1 = threading.Thread(target=reader, args=(1,))
+    reader2 = threading.Thread(target=reader, args=(2,))
+    writer1 = threading.Thread(target=writer, args=(1,))
+    writer2 = threading.Thread(target=writer, args=(2,))
+
+    reader1.start()
+    reader2.start()
+    writer1.start()
+    writer2.start()
+
+    reader1.join()
+    reader2.join()
+    writer1.join()
+    writer2.join()
+
+    print("Final Shared Data:", shared_data)
+
+Save and run:
+
+    nano readers_writers.py
+    python3 readers_writers.py
+
+Expected output
+
+The order can change because threads execute concurrently:
+
+    Reader 1 is reading: 100
+    Reader 2 is reading: 100
+    Writer 1 updated data to: 110
+    Writer 2 updated data to: 120
+    Final Shared Data: 120

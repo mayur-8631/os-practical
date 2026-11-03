@@ -1,0 +1,122 @@
+Implement file allocation and disk scheduling algorithms (FCFS, SSTF).
+Analyze storage utilization, access time, and system throughput.
+
+Practical 20 — File Allocation and Disk Scheduling (Python)
+
+Task 1: File Allocation Simulation (Contiguous Allocation)
+
+    n = int(input("Enter number of files: "))
+
+    for i in range(n):
+        name = input("Enter file name: ")
+        start = int(input("Enter starting block: "))
+        length = int(input("Enter number of blocks: "))
+
+        print("\nFile:", name)
+        print("Allocated Blocks:", end=" ")
+
+        for j in range(length):
+            print(start + j, end=" ")
+
+        print("\n")
+
+Run:
+
+    python3 file_allocation.py
+
+------------------------------------------------------------------------
+
+Task 2: FCFS Disk Scheduling
+
+    n = int(input("Enter number of disk requests: "))
+
+    requests = list(map(int, input("Enter disk requests: ").split()))
+
+    head = int(input("Enter initial head position: "))
+
+    total_movement = 0
+    current = head
+
+    print("\nHead Movement:")
+
+    for request in requests:
+        movement = abs(request - current)
+
+        print(current, "->", request)
+
+        total_movement += movement
+        current = request
+
+    print("\nTotal Head Movement:", total_movement)
+    print("Average Seek Time:", total_movement / n)
+
+Run:
+
+    python3 fcfs_disk.py
+
+Example Input
+
+    Enter number of disk requests: 5
+    Enter disk requests: 98 183 37 122 14
+    Enter initial head position: 53
+
+------------------------------------------------------------------------
+
+Task 3: SSTF Disk Scheduling
+
+SSTF = Shortest Seek Time First
+
+    n = int(input("Enter number of disk requests: "))
+
+    requests = list(map(int, input("Enter disk requests: ").split()))
+
+    head = int(input("Enter initial head position: "))
+
+    total_movement = 0
+    current = head
+
+    sequence = []
+
+    while requests:
+
+        nearest = min(requests, key=lambda x: abs(x - current))
+
+        movement = abs(nearest - current)
+
+        total_movement += movement
+        current = nearest
+
+        sequence.append(nearest)
+        requests.remove(nearest)
+
+    print("\nDisk Scheduling Sequence:")
+    print(head, end=" -> ")
+
+    for request in sequence:
+        print(request, end=" -> ")
+
+    print("\n\nTotal Head Movement:", total_movement)
+    print("Average Seek Time:", total_movement / n)
+
+Run:
+
+    python3 sstf.py
+
+------------------------------------------------------------------------
+
+Practical 20 Files
+
+    file_allocation.py  → File allocation simulation
+    fcfs_disk.py        → FCFS disk scheduling
+    sstf.py             → SSTF disk scheduling
+
+Performance Comparison
+
+Compare FCFS and SSTF using:
+
+-   Total Head Movement
+-   Average Seek Time
+-   Disk Access Efficiency
+
+Generally, SSTF reduces total head movement compared to FCFS, but FCFS
+is simpler and services requests in their arrival order.

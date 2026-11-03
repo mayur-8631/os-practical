@@ -1,0 +1,236 @@
+﻿    1. Perform basic file and directory operations using Linux command-line utilities. Tasks: i. Display the current working directory and list files, including hidden files. ii. Create a directory named OS_Lab and three subdirectories inside it. iii. Create text files, write content into them, and display their contents. iv. Copy, rename, move, and delete files using appropriate commands. v. Search for a specified file and display its size and other file information.
+Task 1. Display the current working directory and list files, including hidden files.
+pwd
+ls
+ls -l
+ls -a
+ls -la
+Task 2: Create OS_Lab directory and three subdirectories
+# Create OS_Lab directory
+mkdir OS_Lab
+
+# Enter the directory
+cd OS_Lab
+
+# Create three subdirectories separately
+mkdir Programs
+mkdir Notes
+mkdir Output
+
+# OR create all three subdirectories together
+mkdir Programs Notes Output
+
+# OR create OS_Lab and subdirectories in one command
+mkdir -p OS_Lab/{Programs,Notes,Output}
+
+# Check directories
+ls
+
+# Detailed listing
+ls -l
+
+# Go back to previous/parent directory
+cd ..
+Task 3: Create text files, write content, and display contents
+# Create an empty file
+touch notes.txt
+
+# Create multiple empty files
+touch notes.txt student.txt data.txt
+
+# Write content (creates/replaces file)
+echo "Operating Systems Lab" > notes.txt
+
+# Add/append content without replacing existing content
+echo "Linux Practical 1" >> notes.txt
+
+# Create a student file
+echo "Name: Mayuresh Kamble" > student.txt
+echo "Department: AIML" >> student.txt
+
+# Display file contents
+cat notes.txt
+cat student.txt
+
+# Display with line numbers
+cat -n notes.txt
+
+# Display using less
+less notes.txt
+
+# Display first few lines
+head notes.txt
+
+# Display last few lines
+tail notes.txt
+Task 4: Copy, rename, move, and delete files
+# Copy a file
+cp notes.txt notes_backup.txt
+
+# Copy file into a directory
+cp notes.txt Notes/
+
+# Copy multiple files
+cp notes.txt student.txt Notes/
+
+# Rename a file
+mv notes_backup.txt notes_copy.txt
+
+# Move a file into Output directory
+mv notes_copy.txt Output/
+
+# Move and rename simultaneously
+mv notes.txt Notes/lab_notes.txt
+
+# Delete a file
+rm student.txt
+
+# Ask for confirmation before deleting
+rm -i student.txt
+
+# Delete multiple files
+rm file1.txt file2.txt
+
+# Delete an empty directory
+rmdir TestFolder
+
+# Delete a directory and its contents
+rm -r TestFolder
+
+# Delete directory with confirmation
+rm -ri TestFolder
+Task 5: Search for a file and display size and file information
+# Search for a specific file in the current directory and subdirectories
+find . -name "notes.txt"
+
+# Search for all text files
+find . -type f -name "*.txt"
+
+# Search directories
+find . -type d -name "Output"
+
+# Case-insensitive search
+find . -iname "NOTES.TXT"
+
+# Display detailed file information
+stat notes.txt
+
+# Display file details and size
+ls -l notes.txt
+
+# Display human-readable size
+ls -lh notes.txt
+
+# Display disk usage
+du notes.txt
+
+# Display human-readable disk usage
+du -h notes.txt
+
+# Get only the apparent file size
+stat -c "%n : %s bytes" notes.txt
+
+# Identify file type
+file notes.txt
+Practical 1 — Complete Final Flow
+# ==================================================
+# PRACTICAL 1: BASIC FILE AND DIRECTORY OPERATIONS
+# ==================================================
+
+
+# ==================================================
+# TASK 1: Display current working directory and
+# list files, including hidden files
+# ==================================================
+
+pwd
+
+ls
+
+ls -l
+
+ls -a
+
+ls -la
+
+
+# ==================================================
+# TASK 2: Create OS_Lab directory and three
+# subdirectories inside it
+# ==================================================
+
+mkdir OS_Lab
+
+cd OS_Lab
+
+mkdir Programs Notes Output
+
+ls
+
+ls -l
+
+
+# ==================================================
+# TASK 3: Create text files, write content,
+# and display their contents
+# ==================================================
+
+touch notes.txt student.txt
+
+echo "Operating Systems Lab Practical 1" > notes.txt
+
+echo "Name: Mayuresh Kamble" > student.txt
+
+echo "Department: AIML" >> student.txt
+
+cat notes.txt
+
+cat student.txt
+
+
+# ==================================================
+# TASK 4: Copy, rename, move, and delete files
+# ==================================================
+
+# Copy notes.txt
+cp notes.txt notes_backup.txt
+
+# Rename notes_backup.txt to notes_copy.txt
+mv notes_backup.txt notes_copy.txt
+
+# Move notes_copy.txt into Output directory
+mv notes_copy.txt Output/
+
+# Delete student.txt
+rm student.txt
+
+# Check remaining files
+ls
+
+# Check file inside Output directory
+ls Output
+
+
+# ==================================================
+# TASK 5: Search for a file and display its size
+# and other file information
+# ==================================================
+
+# Search for notes.txt
+find . -name "notes.txt"
+
+# Search for all text files
+find . -type f -name "*.txt"
+
+# Display complete file information
+stat notes.txt
+
+# Display file details and human-readable size
+ls -lh notes.txt
+
+# Display disk usage
+du -h notes.txt
+
+# Display file type
+file notes.txt
+

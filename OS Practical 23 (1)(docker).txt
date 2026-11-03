@@ -1,0 +1,139 @@
+Deploy a simple AI/ML application inside a Docker container. Monitor
+CPU, memory, storage, and process utilization using Linux tools and
+evaluate the benefits of container-based deployment.
+
+Practical 23 – Containerization and Resource Monitoring for AI/ML Workloads
+
+Aim: To deploy an AI/ML application inside a Docker container and
+monitor CPU, memory, storage, and process utilization using Linux and
+Docker commands.
+
+Technologies: Python, Flask, Docker, Ubuntu (WSL).
+
+1. Create project directory
+
+    mkdir -p ~/ml_docker_app
+    cd ~/ml_docker_app
+
+2. Create app.py
+
+    from flask import Flask, request, jsonify, render_template_string
+
+    app = Flask(__name__)
+
+    HTML = """
+    <!DOCTYPE html>
+    <html>
+    <head>
+        <title>AI Prediction Dashboard</title>
+    </head>
+    <body>
+        <h1>AI Prediction Dashboard</h1>
+    </body>
+    </html>
+    """
+
+3. Create requirements.txt
+
+    Flask
+
+4. Create Dockerfile
+
+    FROM python:3.12-slim
+
+    WORKDIR /app
+
+    COPY requirements.txt .
+
+    RUN pip install --no-cache-dir -r requirements.txt
+
+    COPY . .
+
+    EXPOSE 5000
+
+    CMD ["python", "app.py"]
+
+5. Build Docker image
+
+    docker build -t ml-app .
+
+6. Run Docker container
+
+    docker run -d -p 5000:5000 --name ml-container ml-app
+
+7. Verify running container
+
+    docker ps
+
+8. Test the application
+
+Open the following URLs in your browser:
+
+-   Main application: http://localhost:5000
+
+-   Prediction API: http://localhost:5000/predict?number=10
+
+Expected API output:
+
+    {
+        "input": 10.0,
+        "prediction": 20.0
+    }
+
+9. Monitor resource utilization
+
+A. Monitor CPU and memory usage
+
+    docker stats ml-container
+
+B. Monitor container processes
+
+    docker top ml-container
+
+C. Monitor Docker storage utilization
+
+    docker system df
+
+D. Monitor system disk utilization
+
+    df -h
+
+E. Monitor system memory
+
+    free -h
+
+F. Monitor running Linux processes
+
+    ps aux
+
+G. View container logs
+
+    docker logs ml-container
+
+10. Stop and remove container
+
+    docker stop ml-container
+    docker rm ml-container
+
+Practical execution flow
+
+1.  Create Flask application – Develop the prediction interface and API.
+
+2.  Create Dockerfile – Define the application environment and
+    dependencies.
+
+3.  Build image – Generate the Docker image using docker build.
+
+4.  Run container – Deploy the application using port mapping.
+
+5.  Test application – Verify the dashboard and prediction endpoint.
+
+6.  Monitor resources – Observe CPU, memory, storage and processes.
+
+7.  Stop container – Stop and remove the running container.
+
+Important: The prediction logic in this practical is a demonstration
+(input × 2), not a trained ML model. It demonstrates how an AI/ML-style
+application can be containerized and monitored.
+
+This is the consolidated final implementation for your 23rd practical.

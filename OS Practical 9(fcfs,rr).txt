@@ -1,0 +1,118 @@
+﻿Develop programs to create and manage processes using system calls. Implement CPU scheduling algorithms (SJF, Round Robin) and analyze their impact on process execution, memory utilization, and overall system performance.
+*Task 1:  Process Creation and Management
+# process_management.py
+
+import os
+
+print("Parent Process ID:", os.getpid())
+
+pid = os.fork()
+
+if pid == 0:
+    # Child process
+    print("Child Process Created")
+    print("Child Process ID:", os.getpid())
+else:
+    # Parent process waits for child
+    os.wait()
+    print("Child Process Completed")
+
+python3 process_management.py
+Task 2: FCFS Scheduling Algorithm
+# fcfs.py
+
+n = int(input("Enter number of processes: "))
+
+burst_time = []
+
+# Input burst times
+for i in range(n):
+    bt = int(input(f"Enter Burst Time for P{i + 1}: "))
+    burst_time.append(bt)
+
+waiting_time = [0] * n
+turnaround_time = [0] * n
+
+# Calculate Waiting Time
+for i in range(1, n):
+    waiting_time[i] = waiting_time[i - 1] + burst_time[i - 1]
+
+# Calculate Turnaround Time
+for i in range(n):
+    turnaround_time[i] = waiting_time[i] + burst_time[i]
+
+# Display results
+print("\nProcess\tBT\tWT\tTAT")
+
+for i in range(n):
+    print(f"P{i + 1}\t{burst_time[i]}\t{waiting_time[i]}\t{turnaround_time[i]}")
+
+# Average times
+print("\nAverage Waiting Time =", sum(waiting_time) / n)
+print("Average Turnaround Time =", sum(turnaround_time) / n)
+
+python3 fcfs.py
+Task 3: Round Robin Scheduling Algorithm
+# round_robin.py
+
+n = int(input("Enter number of processes: "))
+
+burst_time = []
+
+# Input burst times
+for i in range(n):
+    bt = int(input(f"Enter Burst Time for P{i + 1}: "))
+    burst_time.append(bt)
+
+quantum = int(input("Enter Time Quantum: "))
+
+# Copy burst time
+remaining_time = burst_time.copy()
+
+waiting_time = [0] * n
+time = 0
+
+while True:
+    completed = True
+
+    for i in range(n):
+
+        if remaining_time[i] > 0:
+            completed = False
+
+            # Process needs more CPU time
+            if remaining_time[i] > quantum:
+                time += quantum
+                remaining_time[i] -= quantum
+
+            # Process completes
+            else:
+                time += remaining_time[i]
+
+                waiting_time[i] = time - burst_time[i]
+
+                remaining_time[i] = 0
+
+    # Stop when all processes are completed
+    if completed:
+        break
+
+# Calculate Turnaround Time
+turnaround_time = []
+
+for i in range(n):
+    tat = waiting_time[i] + burst_time[i]
+    turnaround_time.append(tat)
+
+# Display results
+print("\nProcess\tBT\tWT\tTAT")
+
+for i in range(n):
+    print(f"P{i + 1}\t{burst_time[i]}\t{waiting_time[i]}\t{turnaround_time[i]}")
+
+# Average times
+print("\nAverage Waiting Time =", sum(waiting_time) / n)
+print("Average Turnaround Time =", sum(turnaround_time) / n)
+
+python3 round_robin.py
+

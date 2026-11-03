@@ -1,0 +1,109 @@
+﻿Task 1: Calculate the factorial of a number using for, while, and until loops
+# ==========================================
+# PRACTICAL 6 - TASK 1(i)
+# Calculate factorial using
+# FOR, WHILE and UNTIL loops
+# ==========================================
+
+# Create the shell script
+nano factorial.sh
+
+#!/bin/bash
+
+# Accept a number
+echo"Enter a number: " 
+read num
+
+
+# ---------- FOR LOOP ----------
+factorial=1
+
+for ((i=1; i<=num; i++))
+do
+    factorial=$((factorial * i))
+done
+
+echo "Factorial using FOR loop: $factorial"
+
+
+# ---------- WHILE LOOP ----------
+factorial=1
+i=1
+
+while [ $i -le $num ]
+do
+    factorial=$((factorial * i))
+    i=$((i + 1))
+done
+
+echo "Factorial using WHILE loop: $factorial"
+
+
+# ---------- UNTIL LOOP ----------
+factorial=1
+i=1
+
+until [ $i -gt $num ]
+do
+    factorial=$((factorial * i))
+    i=$((i + 1))
+done
+
+echo "Factorial using UNTIL loop: $factorial"
+
+# Give execute permission
+chmod +x factorial.sh
+
+# Run the script
+./factorial.sh
+Task 2:  Check whether a number is Even or Odd using if-else
+#!/bin/bash
+
+# Accept a number from the user
+echo"Enter a number: " 
+read num
+
+# Check whether the number is even or odd
+if [ $((num % 2)) -eq 0 ]
+then
+    echo "$num is Even"
+else
+    echo "$num is Odd"
+fi
+
+# Give execute permission
+chmod +x even_odd.sh
+
+# Run the script
+./even_odd.sh
+Task 3: display a number entered by user using function.
+# ==========================================
+# PRACTICAL 6 - TASK 1(iii)
+# Display a number entered by the user
+# using a FUNCTION
+# ==========================================
+
+# Create the shell script
+nano display_function.sh
+
+#!/bin/bash
+
+# Define a function
+display_number()
+{
+    echo "The number entered is: $1"
+}
+
+# Accept a number from the user
+echo"Enter a number: " 
+read num
+
+# Call the function and pass the number
+display_number "$num"
+
+# Give execute permission
+chmod +x display_function.sh
+
+# Run the script
+./display_function.sh
+

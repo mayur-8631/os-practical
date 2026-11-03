@@ -1,0 +1,60 @@
+Implement Inter-Process Communication using pipes and shared memory.
+Analyze communication efficiency, resource sharing, and memory
+utilization.
+
+Task 1: IPC Using Pipes
+
+
+    from multiprocessing import Process, Pipe
+
+    def child_process(connection):
+        message = connection.recv()
+        print("Child received:", message)
+        connection.close()
+
+    if __name__ == "__main__":
+        parent_conn, child_conn = Pipe()
+
+        p = Process(target=child_process, args=(child_conn,))
+
+        p.start()
+
+        parent_conn.send("Hello from Parent Process")
+        print("Parent sent: Hello from Parent Process")
+
+        p.join()
+
+        parent_conn.close()
+        child_conn.close()
+
+    python3 pipe_ipc.py
+
+Task 2: IPC Using Shared Memory
+
+    from multiprocessing import Process, Pipe
+
+
+    def sender(conn):
+        message = "Hello from Parent Process"
+        conn.send(message)
+        conn.close()
+
+
+    def receiver(conn):
+        message = conn.recv()
+        print("Received message:", message)
+        conn.close()
+
+
+    if __name__ == "__main__":
+
+        parent_conn, child_conn = Pipe()
+
+        p1 = Process(target=sender, args=(parent_conn,))
+        p2 = Process(target=receiver, args=(child_conn,))
+
+        p1.start()
+        p2.start()
+
+        p1.join()
+        p2.join()

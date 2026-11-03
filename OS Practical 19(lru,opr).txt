@@ -1,0 +1,196 @@
+Simulate paging, segmentation, and virtual memory management. Implement
+LRU and Optimal page replacement algorithms and compare their
+effectiveness using performance metrics
+
+Practical 19 — Paging, Segmentation, LRU and Optimal (Python)
+
+Task 1: Paging Simulation
+
+    n = int(input("Enter number of pages: "))
+    page_size = int(input("Enter page size: "))
+
+    page_table = []
+
+    for i in range(n):
+        frame = int(input(f"Enter frame number for Page {i}: "))
+        page_table.append(frame)
+
+    logical_address = int(input("Enter logical address: "))
+
+    page_number = logical_address // page_size
+    offset = logical_address % page_size
+
+    if page_number >= n:
+        print("Invalid logical address")
+    else:
+        frame_number = page_table[page_number]
+        physical_address = frame_number * page_size + offset
+
+        print("Page Number:", page_number)
+        print("Offset:", offset)
+        print("Frame Number:", frame_number)
+        print("Physical Address:", physical_address)
+
+Run:
+
+    python3 paging.py
+
+------------------------------------------------------------------------
+
+Task 2: Segmentation Simulation
+
+    n = int(input("Enter number of segments: "))
+
+    base = []
+    limit = []
+
+    for i in range(n):
+        b = int(input(f"Enter base address for Segment {i}: "))
+        l = int(input(f"Enter limit for Segment {i}: "))
+
+        base.append(b)
+        limit.append(l)
+
+    segment = int(input("Enter segment number: "))
+    offset = int(input("Enter offset: "))
+
+    if segment < 0 or segment >= n:
+        print("Invalid segment number")
+
+    elif offset >= limit[segment]:
+        print("Invalid offset - Segmentation Fault")
+
+    else:
+        physical_address = base[segment] + offset
+        print("Physical Address:", physical_address)
+
+Run:
+
+    python3 segmentation.py
+
+------------------------------------------------------------------------
+
+Task 3: LRU Page Replacement
+
+    n = int(input("Enter number of pages: "))
+
+    pages = list(map(int, input("Enter page reference string: ").split()))
+
+    frames_count = int(input("Enter number of frames: "))
+
+    frames = []
+    page_faults = 0
+
+    for page in pages:
+
+        if page in frames:
+
+            frames.remove(page)
+            frames.append(page)
+
+            print(page, "->", frames, "Page Hit")
+
+        else:
+
+            page_faults += 1
+
+            if len(frames) < frames_count:
+                frames.append(page)
+
+            else:
+                frames.pop(0)
+                frames.append(page)
+
+            print(page, "->", frames, "Page Fault")
+
+    print("\nTotal Page Faults:", page_faults)
+    print("Total Page Hits:", n - page_faults)
+
+Run:
+
+    python3 lru.py
+
+------------------------------------------------------------------------
+
+Task 4: Optimal Page Replacement
+
+    n = int(input("Enter number of pages: "))
+
+    pages = list(map(int, input("Enter page reference string: ").split()))
+
+    frames_count = int(input("Enter number of frames: "))
+
+    frames = []
+    page_faults = 0
+
+    for i in range(n):
+
+        page = pages[i]
+
+        if page in frames:
+
+            print(page, "->", frames, "Page Hit")
+
+        else:
+
+            page_faults += 1
+
+            if len(frames) < frames_count:
+
+                frames.append(page)
+
+            else:
+
+                future_use = []
+
+                for frame in frames:
+
+                    if frame in pages[i + 1:]:
+
+                        index = pages[i + 1:].index(frame)
+                        future_use.append(index)
+
+                    else:
+
+                        future_use.append(999)
+
+                replace_index = future_use.index(max(future_use))
+
+                frames[replace_index] = page
+
+            print(page, "->", frames, "Page Fault")
+
+    print("\nTotal Page Faults:", page_faults)
+    print("Total Page Hits:", n - page_faults)
+
+Run:
+
+    python3 optimal.py
+
+------------------------------------------------------------------------
+
+Example input for LRU and Optimal
+
+Use the same reference string to compare both:
+
+    Enter number of pages: 12
+    Enter page reference string: 1 2 3 4 1 2 5 1 2 3 4 5
+    Enter number of frames: 3
+
+Practical 19 Files
+
+    paging.py        → Paging simulation
+    segmentation.py  → Segmentation simulation
+    lru.py           → LRU page replacement
+    optimal.py       → Optimal page replacement
+
+Performance comparison
+
+Compare:
+
+-   Total Page Faults
+-   Total Page Hits
+
+For the same reference string, Optimal generally gives the minimum
+possible page faults, while LRU uses the page that was least recently
+used for replacement.

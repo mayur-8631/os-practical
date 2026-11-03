@@ -1,0 +1,132 @@
+﻿Write a shell script to i. to generate a multiplication table using loops (for, while, until) ii. to check whether a number is positive, negative or zero, using if-elif-else. iii. Develop a script to check whether a file exists, display its size and basic information.
+Task 1: Write a Shell Script to Display Basic System Information
+# ==========================================
+# PRACTICAL 5 - TASK 1(i)
+# Generate multiplication table using
+# FOR, WHILE and UNTIL loops
+# ==========================================
+
+# Create the shell script
+nano multiplication_table.sh 
+#!/bin/bash
+
+# Accept a number from the user
+echo"Enter a number: " 
+read num
+
+# ---------- FOR LOOP ----------
+echo ""
+echo "Multiplication Table using FOR loop:"
+
+for ((i=1; i<=10; i++))
+do
+    echo "$num x $i = $((num * i))"
+done
+
+
+# ---------- WHILE LOOP ----------
+echo ""
+echo "Multiplication Table using WHILE loop:"
+
+i=1
+while [ $i -le 10 ]
+do
+    echo "$num x $i = $((num * i))"
+    ((i++))
+done
+
+
+# ---------- UNTIL LOOP ----------
+echo ""
+echo "Multiplication Table using UNTIL loop:"
+
+i=1
+until [ $i -gt 10 ]
+do
+    echo "$num x $i = $((num * i))"
+    ((i++))
+done
+EOF
+
+# Give execute permission
+chmod +x multiplication_table.sh
+
+# Run the shell script
+./multiplication_table.sh
+Task 2: Check whether a number is Positive, Negative, or Zero using `if-elif-else
+# ==========================================
+# PRACTICAL 5 - TASK 1(ii)
+# Check whether a number is Positive,
+# Negative or Zero using IF-ELIF-ELSE
+# ==========================================
+
+# Create the shell script
+check_number.sh p
+#!/bin/bash
+
+# Accept a number from the user
+echo"Enter a number: " 
+read num
+
+# Check the number
+if [ "$num" -gt 0 ]
+then
+    echo "$num is Positive"
+elif [ "$num" -lt 0 ]
+then
+    echo "$num is Negative"
+else
+    echo "The number is Zero"
+fi
+EOF
+
+# Give execute permission
+chmod +x check_number.sh
+
+# Run the shell script
+./check_number.sh
+Task 3:  Check whether a file exists, display its size and basic information
+# ==========================================
+# PRACTICAL 5 - TASK 1(iii)
+# Check whether a file exists and display
+# its size and basic information
+# ==========================================
+
+# Create the shell script
+nano  file_info.sh
+#!/bin/bash
+
+# Accept file name from the user
+echo"Enter file name: " 
+read filename
+
+# Check whether the file exists
+if [ -e "$filename" ]
+then
+    echo ""
+    echo "File exists."
+
+    # Display file size
+    echo ""
+    echo "File Size:"
+    ls -lh "$filename"
+
+    # Display basic file information
+    echo ""
+    echo "Basic File Information:"
+    stat "$filename"
+
+else
+    echo "File does not exist."
+fi
+EOF
+
+# Give execute permission
+chmod +x file_info.sh
+
+# Create a sample file for testing
+echo "Operating System Practical 5" > sample.txt
+
+# Run the shell script
+./file_info.sh
+
